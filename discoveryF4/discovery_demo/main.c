@@ -25,7 +25,7 @@
 #define ADC1_DR_Address   ((uint32_t)0x4001204C)
  
 uint16_t ADCConvertedValues[BUFFERSIZE];
-__IO uint16_t ADCoverValue;
+__IO uint16_t ADCoverValue[2] = {0};
 uint16_t USING_PIN[]={GPIO_Pin_3, GPIO_Pin_4, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_7, GPIO_Pin_8, GPIO_Pin_9, GPIO_Pin_10, GPIO_Pin_11, GPIO_Pin_12, GPIO_Pin_13, GPIO_Pin_14};
 
 /* Private macro -------------------------------------------------------------*/
@@ -156,13 +156,13 @@ void DMA_Config(){
 	DMA_StructInit(&DMA_InitStructure);
 	DMA_InitStructure.DMA_Channel = DMA_Channel_0;
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC1_DR_Address;
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADCoverValue;
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) ADCoverValue;
 
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 
 	DMA_InitStructure.DMA_BufferSize = 2;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_ENable;
 
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
